@@ -4,18 +4,20 @@
 import React, { Component } from 'react';
 import { NavBar, WingBlank, List, InputItem, WhiteSpace, Button, Radio } from 'antd-mobile';
 import Logo from '../../components/logo/logo';
+import {connect} from 'react-redux'
+import { register } from '../../redux/actions'; 
 const ListItem = List.Item;
 
-export default class Register extends Component {
+class Register extends Component {
     state = {
         username: '', // username
         password: '', // password
         password2: '', // confirm password
-        userType: 'boss', // user type (candidate or boss)
+        type: 'boss', // user type (candidate or boss)
     }
 
     register = () => {
-        console.log(this.state);
+        this.props.register(this.state)
     }
 
     handleChange = (name, val) => {
@@ -45,9 +47,9 @@ export default class Register extends Component {
                         <ListItem>
                             <span>user type</span>
                             &nbsp;&nbsp;&nbsp;&nbsp;
-                            <Radio checked={this.state.userType === 'candidate'} onChange={val => {this.handleChange('userType', 'candidate')}}>Candidate</Radio>
+                            <Radio checked={this.state.type === 'candidate'} onChange={val => {this.handleChange('type', 'candidate')}}>Candidate</Radio>
                             &nbsp;&nbsp;&nbsp;&nbsp;
-                            <Radio checked={this.state.userType === 'boss'} onChange={val => {this.handleChange('userType', 'boss')}}>Boss</Radio>
+                            <Radio checked={this.state.type === 'boss'} onChange={val => {this.handleChange('type', 'boss')}}>Boss</Radio>
                         </ListItem>
                         <WhiteSpace />
                         <Button type="primary" onClick={this.register}>Register</Button>
@@ -59,3 +61,8 @@ export default class Register extends Component {
         );
     }
 }
+
+export default connect(
+    state => ({}),
+    {register}
+)(Register)
