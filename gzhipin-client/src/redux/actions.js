@@ -41,7 +41,16 @@ export const register = (user) => {
     }
 }
 
-export const login = (username, password) => {
+export const login = (user) => {
+    const {username, password} = user
+    if (!username) {
+        return errorMsg('user name incomplete');
+    }
+
+    if (!password) {
+         return errorMsg('password incomplete');
+    }
+
     return async dispatch => {
         // send login async ajax
         const response = await reqLogin(username, password);
