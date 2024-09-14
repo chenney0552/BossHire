@@ -52,4 +52,40 @@ function testSave() {
     });
 }
 
-testSave();
+// testSave();
+
+function testFind() {
+    UserModel.find((err, users) => {
+        if (err) {
+            console.log('Find error', err);
+        } else {
+            console.log('Find success', users);
+        }
+    });
+
+    UserModel.findOne({_id: '66e4b666123e05bb8c980303'}, function (error, user) {
+        console.log('findOne()', error, user);
+    });
+}
+
+function testUpdate() {
+    UserModel.findByIdAndUpdate({_id: '66e4b666123e05bb8c980303'}, {username: 'updatedUser'}, function (error, oldUser) {
+        if (error) {
+            console.log('Update error', error);
+        } else {
+            console.log('Update success', oldUser);
+        }
+    });
+}
+
+function testDelete() {
+    UserModel.remove({_id: '66e4b666123e05bb8c980303'}, function (error, doc) {
+        if (error) {
+            console.log('Delete error', error);
+        } else {
+            console.log('Delete success', doc);
+        }
+    });
+}
+
+testDelete();
