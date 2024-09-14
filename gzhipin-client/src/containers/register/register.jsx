@@ -5,7 +5,8 @@ import React, { Component } from 'react';
 import { NavBar, WingBlank, List, InputItem, WhiteSpace, Button, Radio } from 'antd-mobile';
 import Logo from '../../components/logo/logo';
 import {connect} from 'react-redux'
-import { register } from '../../redux/actions'; 
+import { register } from '../../redux/actions';
+import {Redirect} from 'react-router-dom'
 const ListItem = List.Item;
 
 class Register extends Component {
@@ -31,12 +32,17 @@ class Register extends Component {
     }
 
     render() {
+        const {msg, redirectTo} = this.props.user
+        if (redirectTo) {
+            return <Redirect to={redirectTo}/>
+        }
         return (
             <div>
                 <NavBar>Boss &nbsp;Hire</NavBar>
                 <Logo />
                 <WingBlank>
                     <List>
+                        {msg? <div className='error-msg'>{msg}</div> : null}
                         <WhiteSpace />
                         <InputItem placeholder="username" onChange={val => {this.handleChange('username', val)}}>username</InputItem>
                         <WhiteSpace />
@@ -63,6 +69,6 @@ class Register extends Component {
 }
 
 export default connect(
-    state => ({}),
+    state => ({user: state.user}),
     {register}
 )(Register)

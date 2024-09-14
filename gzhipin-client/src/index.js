@@ -6,6 +6,7 @@ import Main from './containers/main/main';
 import { HashRouter, Route, Switch } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import store from './redux/store';
+import './assets/css/index.less'
 
 ReactDOM.render(
   <Provider store={store}>

@@ -9,12 +9,13 @@ const initUser = {
     username: '', // user name
     type: '', // user type
     msg: '', // error info
+    redirectTo: '' // redirect to router path
 }
 
 function user(state=initUser, action) {
     switch (action.type) {
         case AUTH_SUCCESS: // data 是 user
-            return {...state, ...action.data, msg: ''}
+            return {...state, ...action.data, redirectTo: '/'}
         case ERROR_MSG: // data 是 msg
             return {...state, msg: action.data}
         default:
