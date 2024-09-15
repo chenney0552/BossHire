@@ -74,7 +74,7 @@ router.post('/update', function (req, res) {
     } else {
       const {_id, username, type} = oldUser
       const data = Object.assign(req.body, {_id, username, type})
-      res.send({cpde: 0, data: data})
+      res.send({code: 0, data: data})
     }
   });
 });
