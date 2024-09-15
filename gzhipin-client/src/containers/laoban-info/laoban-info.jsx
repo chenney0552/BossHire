@@ -5,6 +5,7 @@ import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import { NavBar, InputItem, TextareaItem, Button } from 'antd-mobile';
 import HeaderSelector from '../../components/header-selector/header-selector';
+import { updateUser } from '../../redux/actions';
 
 class LaobanInfo extends Component {
 
@@ -26,7 +27,7 @@ class LaobanInfo extends Component {
         });
     }
 
-    save = () => {console.log(this.state);}
+    save = () => {this.props.updateUser(this.state)}
 
     render() {
         return (
@@ -45,5 +46,5 @@ class LaobanInfo extends Component {
 
 export default connect(
     state => ({}),
-    {}
+    {updateUser}
 )(LaobanInfo);
