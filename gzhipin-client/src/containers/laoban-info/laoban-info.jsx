@@ -3,6 +3,7 @@ Boss information container component
 */
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
+import { Redirect } from 'react-router-dom';
 import { NavBar, InputItem, TextareaItem, Button } from 'antd-mobile';
 import HeaderSelector from '../../components/header-selector/header-selector';
 import { updateUser } from '../../redux/actions';
@@ -30,6 +31,13 @@ class LaobanInfo extends Component {
     save = () => {this.props.updateUser(this.state)}
 
     render() {
+        const {header, type} = this.props.user
+
+        if (header) { // 所有信息都已完成
+            const path = type === 'candidate' ? '/dashen' : '/laoban';
+            return <Redirect to={path} />
+        }
+
         return (
             <div>
                 <NavBar>Boss Information Edit</NavBar>
@@ -45,6 +53,6 @@ class LaobanInfo extends Component {
 }
 
 export default connect(
-    state => ({}),
+    state => ({user: state.user}),
     {updateUser}
 )(LaobanInfo);
