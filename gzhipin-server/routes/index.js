@@ -57,5 +57,26 @@ router.post('/login', function (req, res) {
   });
 });
 
+// update router
+router.post('/update', function (req, res) {
+  const userId = req.cookies.userid;
+  if (!userId) {
+    return res.send({code:1, msg: 'Please login first'});
+  }
+
+  // update the user by use id
+  const user = req.body; 
+
+  UserModel.findByIdAndUpdate({_id: userId}, user, function (error, oldUser) {
+    if (!oldUser) {
+      res.clearCookie('userid')
+      return res.send({code:1, msg: 'Please login first'});
+    } else {
+      const {_id, username, type} = oldUser
+      const data = Object.assign(req.body, {_id, username, type})
+      res.send({cpde: 0, data: data})
+    }
+  });
+});
 
 module.exports = router;
