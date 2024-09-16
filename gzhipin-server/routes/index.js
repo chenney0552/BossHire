@@ -79,4 +79,24 @@ router.post('/update', function (req, res) {
   });
 });
 
+// create router go get user information
+router.get('/user', function (req, res) {
+  const userId = req.cookies.userid;
+  if (!userId) {
+    return res.send({code: 1, msg: 'Please login first'});
+  }
+
+  // get user information by user id
+  UserModel.findOne({_id: userId}, filter, function (err, user) {
+    console.log('userId', userId);
+    if (err) {
+      res.send({code: 500, msg: 'server error'});
+    } else if (!user) {
+      res.send({code: 1, msg: 'user not found'});
+    } else {
+      res.send({code: 0, data: user});
+    }
+  });
+});
+
 module.exports = router;

@@ -1,7 +1,7 @@
 /*
 * contains multiple action creators
 */
-import {reqRegister, reqLogin, reqUpdateUser} from '../api'
+import {reqRegister, reqLogin, reqUpdateUser, reqUser} from '../api'
 import { AUTH_SUCCESS, ERROR_MSG, RECEIVE_USER, RESET_USER } from './action-types';
 
 const authSuccess = (user) => ({type: AUTH_SUCCESS, data: user});
@@ -72,6 +72,18 @@ export const updateUser = (user) => {
         if (result.code === 0) { // success data
             dispatch(receiveUser(result.data))
         } else { // failed msg
+            dispatch(resetUser(result.msg))
+        }
+    }
+}
+
+export const getUser = () => {
+    return async dispatch => {
+        const response = await reqUser();
+        const result = response.data;
+        if (result.code === 0) {
+            dispatch(receiveUser(result.data))
+        } else {
             dispatch(resetUser(result.msg))
         }
     }
