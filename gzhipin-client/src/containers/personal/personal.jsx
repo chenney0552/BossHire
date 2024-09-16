@@ -1,12 +1,12 @@
-// 老板的主界面路由容器组件
+// 个人中心的路由容器组件
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import { getUser } from '../../redux/actions';
 
-class Laoban extends Component {
+class Personal extends Component {
     render() {
         return (
-            <div>Laoban</div>
+            <div>Personal</div>
         )
     }
 }
@@ -14,4 +14,4 @@ class Laoban extends Component {
 export default connect(
     state => ({user: state.user}),
     {getUser}
-)(Laoban)
+)(Personal)
