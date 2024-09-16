@@ -15,6 +15,7 @@ import Message from '../message/message';
 import Personal from '../personal/personal';
 import NotFound from '../../components/not-found/not-found';
 import { NavBar } from 'antd-mobile';
+import NavFooter from '../../components/nav-footer/nav-footer';
 
 class Main extends Component {
     // 给组件对象添加属性
@@ -97,7 +98,7 @@ class Main extends Component {
                     <Route path='/laobaninfo' component={LaobanInfo} />
                     <Route component={NotFound} />
                 </Switch>
-                {currentNav ? <div>foot bar</div> : null}
+                {currentNav ? <NavFooter navList={navList}/> : null}
             </div>
         );
     }
