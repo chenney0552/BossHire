@@ -87,7 +87,7 @@ class Main extends Component {
 
         if(currentNav) {
             // check which router need to hide
-            if (user.type === 'laoban') {
+            if (user.type === 'candidate') {
                 navList[1].hide = true;
             } else {
                 navList[0].hide = true;

@@ -26,6 +26,7 @@ class NavFooter extends React.Component {
                           selectedIcon={{uri: require(`./images/${nav.icon}-selected.png`)}} 
                           selected={path === nav.path} 
                           onPress={() => {
+                            console.log(nav.path);
                             this.props.history.replace(nav.path);
                         }}
                     />
