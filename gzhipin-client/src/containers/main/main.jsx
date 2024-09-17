@@ -85,6 +85,15 @@ class Main extends Component {
         const path = this.props.location.pathname;
         const currentNav = navList.find(nav => nav.path === path);
 
+        if(currentNav) {
+            // check which router need to hide
+            if (user.type === 'laoban') {
+                navList[1].hide = true;
+            } else {
+                navList[0].hide = true;
+            }
+        }
+
         return (
             <div>
                 {currentNav ? <NavBar>{currentNav.title}</NavBar> : null}
