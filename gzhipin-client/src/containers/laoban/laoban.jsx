@@ -6,7 +6,7 @@ import {getUserList} from '../../redux/actions';
 
 class Laoban extends Component {
     componentDidMount() {
-        this.props.getUserList('candidate');
+        this.props.getUserList('boss');
     }
 
     render() {

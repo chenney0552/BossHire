@@ -6,7 +6,7 @@ import {getUserList} from '../../redux/actions';
 
 class Dashen extends Component {
     componentDidMount() {
-        this.props.getUserList('boss');
+        this.props.getUserList('candidate');
     }
 
     render() {

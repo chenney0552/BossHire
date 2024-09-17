@@ -19,10 +19,10 @@ export default class UserList extends Component {
         return (
             <WingBlank>
                 <WhiteSpace/>
-                {userList.map(user => (
+                {userList.map((user, index) => (
                     <Card key={user._id}>
                         <Header title={user.username} 
-                                thumb={require(`../../assets/images/头像1.png`)}/>
+                                thumb={require(`../../assets/images/头像${index + 1}.png`)}/>
                         <Body>
                             <div>position: {user.post}</div>
                             {user.company ? <div>company: {user.company}</div> : null}
