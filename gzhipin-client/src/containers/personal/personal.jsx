@@ -2,7 +2,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import { getUser } from '../../redux/actions';
-import { List, Result, WhiteSpace, Button, Modal } from 'antd-mobile';
+import { List, Result, WhiteSpace, Button, Modal, WingBlank } from 'antd-mobile';
 import Cookies from 'js-cookie';
 import {resetUser} from '../../redux/actions';
 const Item = List.Item
@@ -30,6 +30,7 @@ class Personal extends Component {
         const avatarNumber = avatar ? avatar[1] : null;
         return (
             <div>
+                <WingBlank style={{marginBottom: 50, marginTop: 50}}>
                 <Result
                     img={<img src={require(`../../assets/images/头像${avatarNumber}.png`)} alt='avatar' style={{width: 50, height: 50}}/>}
                     title={username}
@@ -46,6 +47,7 @@ class Personal extends Component {
                 <List>
                     <Button type='warning' onClick={this.handleLogout}>Log out</Button>
                 </List>
+                </WingBlank>
             </div>
         )
     }
