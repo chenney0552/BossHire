@@ -2,12 +2,28 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import { getUser } from '../../redux/actions';
-import { List, Result, WhiteSpace, Button } from 'antd-mobile';
+import { List, Result, WhiteSpace, Button, Modal } from 'antd-mobile';
+import Cookies from 'js-cookie';
+import {resetUser} from '../../redux/actions';
 const Item = List.Item
 const Brief = Item.Brief
 
 
 class Personal extends Component {
+    handleLogout = () => {
+        Modal.alert('Log out', 'Are you sure you want to log out?', [
+            {text: 'Cancel', onPress: () => console.log('Cancel')},
+            {text: 'Confirm', onPress: () => 
+                {
+                    // clear the cookie
+                    Cookies.remove('userid');
+                    
+                    // clear the user info in redux
+                    this.props.resetUser();
+                }}
+        ])
+    }
+
     render() {
         const {username, header, company, post, info, salary} = this.props.user;
         const avatar = header.match(/avatar(\d+)/);
@@ -28,7 +44,7 @@ class Personal extends Component {
                 </List>
                 <WhiteSpace/>
                 <List>
-                    <Button type='warning'>Log out</Button>
+                    <Button type='warning' onClick={this.handleLogout}>Log out</Button>
                 </List>
             </div>
         )
@@ -37,5 +53,5 @@ class Personal extends Component {
 
 export default connect(
     state => ({user: state.user}),
-    {getUser}
+    {getUser, resetUser}
 )(Personal)
