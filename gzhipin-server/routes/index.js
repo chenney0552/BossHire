@@ -99,4 +99,16 @@ router.get('/user', function (req, res) {
   });
 });
 
+// get user list
+router.get('/userlist', function (req, res) {
+  const type = req.query.type;
+  UserModel.find({type: type}, filter, function (err, users) {
+    if (err) {
+      res.send({code: 500, msg: 'server error'});
+    } else {
+      res.send({code: 0, data: users});
+    }
+  });
+});
+
 module.exports = router;
