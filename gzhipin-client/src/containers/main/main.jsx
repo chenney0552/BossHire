@@ -23,16 +23,16 @@ class Main extends Component {
         {
             path: '/laoban', // 路由路径
             component: Laoban,
-            title: '大神列表',
+            title: '老板列表',
             icon: 'dashen',
-            text: '大神',
+            text: '老板',
         },
         {
             path: '/dashen', // 路由路径
             component: Dashen,
-            title: '老板列表',
+            title: '大神列表',
             icon: 'laoban',
-            text: '老板',
+            text: '大神',
         },
         {
             path: '/message', // 路由路径

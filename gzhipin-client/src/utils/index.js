@@ -12,9 +12,9 @@ export function getRedirectTo(type, header) {
     let path;
     // if user type is boss
     if(type==='boss') {
-        path = '/laoban'
-    } else {
         path = '/dashen'
+    } else {
+        path = '/laoban'
     }
     // if user didn't complete the information
     if(!header) {
