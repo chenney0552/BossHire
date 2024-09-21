@@ -112,7 +112,7 @@ router.get('/userlist', function (req, res) {
 });
 
 // 获取聊天列表
-router.get('/chatlist', function (req, res) {
+router.get('/msglist', function (req, res) {
   const userId = req.cookies.userid;
   if (!userId) {
     return res.send({code: 1, msg: 'Please login first'});
@@ -135,7 +135,7 @@ router.get('/chatlist', function (req, res) {
 });
 
 // 处理消息已读状态的更新
-router.post('readmsg', function (req, res) {
+router.post('/readmsg', function (req, res) {
   const from = req.body.from;
   const to = req.cookies.userid;
   ChatModel.update({from, to, read: false}, {read: true}, {multi: true}, function (err, doc) {

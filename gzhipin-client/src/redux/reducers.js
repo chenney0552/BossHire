@@ -2,7 +2,7 @@
 * contains multiple reducers functions: based on the old state and action, return a new state
 */
 import { combineReducers } from 'redux';
-import { AUTH_SUCCESS, ERROR_MSG, RECEIVE_USER, RESET_USER, RECEIVE_USER_LIST } from './action-types';
+import { AUTH_SUCCESS, ERROR_MSG, RECEIVE_USER, RESET_USER, RECEIVE_USER_LIST, RECEIVE_MSG_LIST, RECEIVE_MSG } from './action-types';
 import {getRedirectTo} from '../utils'
 
 // reducer for user
@@ -11,6 +11,29 @@ const initUser = {
     type: '', // user type
     msg: '', // error info
     redirectTo: '' // redirect to router path
+}
+
+const initChat = {
+    users:{}, // all the users in the chat key: userid, value: user
+    chatMsgs: [], // all the chat messages realted with current user
+    unReadCount: 0 // total unread message count
+}
+
+// reducer for chat state
+function chat(state=initChat, action) {
+    switch (action.type) {
+        case RECEIVE_MSG_LIST:
+            console.log('RECEIVE_MSG_LIST', action.data);
+            const {users, chatMsgs} = action.data;
+            return {users,
+                chatMsgs,
+                unReadCount: 0
+            }
+        case RECEIVE_MSG:
+            return
+        default:
+            return state
+    }
 }
 
 function user(state=initUser, action) {
@@ -41,7 +64,8 @@ function userList(state=initUserList, action) {
 
 export default combineReducers({
     user,
-    userList
+    userList,
+    chat
 });
 
 
