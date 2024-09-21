@@ -22,3 +22,16 @@ const UserModel = mongoose.model('user', userSchema);
 
 // export the Model
 exports.UserModel = UserModel
+
+const chatSchema = mongoose.Schema({
+    from: {type: String, required: true}, // 发送者
+    to: {type: String, required: true}, // 接收者
+    chat_id: {type: String, required: true}, // 聊天id 由from和to生成
+    content: {type: String, required: true}, // 内容
+    read: {type: Boolean, default: false}, // 是否已读
+    create_time: {type: Number, default: Date.now} // 创建时间
+});
+
+const ChatModel = mongoose.model('chat', chatSchema);
+
+exports.ChatModel = ChatModel;

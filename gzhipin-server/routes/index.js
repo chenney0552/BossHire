@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 const md5 = require('blueimp-md5')
-const {UserModel} = require('../db/models')
+const {UserModel, ChatModel} = require('../db/models')
 const filter = {password: 0, __v: 0}
 
 /* GET home page. */
@@ -110,5 +110,42 @@ router.get('/userlist', function (req, res) {
     }
   });
 });
+
+// 获取聊天列表
+router.get('/chatlist', function (req, res) {
+  const userId = req.cookies.userid;
+  if (!userId) {
+    return res.send({code: 1, msg: 'Please login first'});
+  }
+  
+  UserModel.find(function (err, userDocs) {
+    const users = {}
+    
+    userDocs.forEach(doc => {
+      users[doc._id] = {
+        username: doc.username,
+        header: doc.header
+      }
+    });
+
+    ChatModel.find({'$or': [{from: userId}, {to: userId}]}, filter, function (err, chatMsgs) {
+      res.send({code: 0, data: {users, chatMsgs}});
+    });
+  });
+});
+
+// 处理消息已读状态的更新
+router.post('readmsg', function (req, res) {
+  const from = req.body.from;
+  const to = req.cookies.userid;
+  ChatModel.update({from, to, read: false}, {read: true}, {multi: true}, function (err, doc) {
+    if (err) {
+      res.send({code: 1, msg: 'server error'});
+    } else {
+      res.send({code: 0, data: doc.nModified});
+    }
+  });
+});
+
 
 module.exports = router;
