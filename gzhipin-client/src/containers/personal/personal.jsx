@@ -32,7 +32,7 @@ class Personal extends Component {
             <div>
                 <WingBlank style={{marginBottom: 50, marginTop: 50}}>
                 <Result
-                    img={<img src={require(`../../assets/images/头像${avatarNumber}.png`)} alt='avatar' style={{width: 50, height: 50}}/>}
+                    img={<img src={require(`../../assets/images/avatar${avatarNumber}.png`)} alt='avatar' style={{width: 50, height: 50}}/>}
                     title={username}
                     message={company}
                 />

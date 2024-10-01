@@ -33,7 +33,6 @@ export const sendMsg = ({from, to, content}) => {
 
 // get msg list
 async function getMsgList(dispatch) {
-    console.log('getMsgList');
     initIO();
     const response = await reqChatMsgList();
     const result = response.data;
@@ -115,7 +114,6 @@ export const updateUser = (user) => {
 }
 
 export const getUser = () => {
-    console.log('getUser called');
     return async dispatch => {
         const response = await reqUser();
         const result = response.data;

@@ -23,7 +23,6 @@ const initChat = {
 function chat(state=initChat, action) {
     switch (action.type) {
         case RECEIVE_MSG_LIST:
-            console.log('RECEIVE_MSG_LIST', action.data);
             const {users, chatMsgs} = action.data;
             return {users,
                 chatMsgs,

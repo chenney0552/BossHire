@@ -23,7 +23,7 @@ class UserList extends Component {
                 {userList.map((user, index) => (
                     <Card key={user._id} onClick={() => this.props.history.push(`/chat/${user._id}`)}>
                         <Header title={user.username} 
-                                thumb={require(`../../assets/images/头像${index + 1}.png`)}/>
+                                thumb={require(`../../assets/images/${user.header}.png`)}/>
                         <Body>
                             <div>position: {user.post}</div>
                             {user.company ? <div>company: {user.company}</div> : null}

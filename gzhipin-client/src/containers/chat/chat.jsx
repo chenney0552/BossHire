@@ -94,7 +94,7 @@ class Chat extends Component {
 
     // 得到目标用户的header图片对象
     const targetHeader = users[targetId].header
-    const targetIcon = targetHeader ? require(`../../assets/images/头像1.png`) : null
+    const targetIcon = targetHeader ? require(`../../assets/images/avatar1.png`) : null
 
     return (
       <div id='chat-page'>
