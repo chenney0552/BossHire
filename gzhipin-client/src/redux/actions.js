@@ -2,7 +2,7 @@
 * contains multiple action creators
 */
 import {reqRegister, reqLogin, reqUpdateUser, reqUser, reqUserList, reqChatMsgList} from '../api'
-import { AUTH_SUCCESS, ERROR_MSG, RECEIVE_USER, RESET_USER, RECEIVE_USER_LIST, RECEIVE_MSG_LIST } from './action-types';
+import { AUTH_SUCCESS, ERROR_MSG, RECEIVE_USER, RESET_USER, RECEIVE_USER_LIST, RECEIVE_MSG_LIST, RECEIVE_MSG } from './action-types';
 import io from 'socket.io-client'
 
 const authSuccess = (user) => ({type: AUTH_SUCCESS, data: user});
@@ -14,12 +14,16 @@ export const receiveUserList = (userList) => ({type: RECEIVE_USER_LIST, data: us
 // use a singleton socket
 // 1. check if socket is already connected
 // 2. if not, connect to the server
-function initIO() {
+function initIO(dispatch, userid) {
     if (!io.socket) {
         const socket = io('ws://localhost:4000');
         io.socket = socket;
         io.socket.on('receiveMsg', function(chatMsg) {
             console.log('receiveMsg', chatMsg);
+            // only when the chatMsg is related with the current user, then dispatch the action
+            if (userid === chatMsg.to || userid === chatMsg.from) {
+                dispatch(receiveMsg(chatMsg))
+            }
         });
     }
 }
@@ -32,8 +36,8 @@ export const sendMsg = ({from, to, content}) => {
 }
 
 // get msg list tool function
-async function getMsgList(dispatch) {
-    initIO();
+async function getMsgList(dispatch, userid) {
+    initIO(dispatch, userid);
     const response = await reqChatMsgList();
     const result = response.data;
     if (result.code === 0) {
@@ -43,6 +47,8 @@ async function getMsgList(dispatch) {
 }
 
 const receiveMsgList = ({users, chatMsgs, userid}) => ({type: RECEIVE_MSG_LIST, data:{users, chatMsgs, userid}})
+const receiveMsg = (chatMsg) => ({type: RECEIVE_MSG, data: chatMsg})
+
 export const register = (user) => {
     const {username, password, password2, type} = user
 
@@ -70,7 +76,7 @@ export const register = (user) => {
         const response = await reqRegister({username, password, type});
         const result = response.data;
         if (result.code === 0) { // 成功
-            getMsgList(dispatch);
+            getMsgList(dispatch, result.data._id);
             dispatch(authSuccess(result.data));
         } else { // 失败
             dispatch(errorMsg(result.msg));
@@ -93,7 +99,7 @@ export const login = (user) => {
         const response = await reqLogin(username, password);
         const result = response.data;
         if (result.code === 0) { // 成功
-            getMsgList(dispatch);
+            getMsgList(dispatch, result.data._id);
             dispatch(authSuccess(result.data));
         } else { // 失败
             dispatch(errorMsg(result.msg));
@@ -118,7 +124,7 @@ export const getUser = () => {
         const response = await reqUser();
         const result = response.data;
         if (result.code === 0) {
-            getMsgList(dispatch);
+            getMsgList(dispatch, result.data._id);
             dispatch(receiveUser(result.data))
         } else {
             dispatch(resetUser(result.msg))
