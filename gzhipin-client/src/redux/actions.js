@@ -21,7 +21,7 @@ function initIO(dispatch, userid) {
         io.socket.on('receiveMsg', function(chatMsg) {
             console.log('receiveMsg', chatMsg);
             // only when the chatMsg is related with the current user, then dispatch the action
-            if (userid === chatMsg.to || userid === chatMsg.from) {
+            if (chatMsg && (userid === chatMsg.to || userid === chatMsg.from)) {
                 dispatch(receiveMsg(chatMsg))
             }
         });
