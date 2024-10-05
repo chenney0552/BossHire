@@ -31,7 +31,7 @@ export const sendMsg = ({from, to, content}) => {
     }
 }
 
-// get msg list
+// get msg list tool function
 async function getMsgList(dispatch) {
     initIO();
     const response = await reqChatMsgList();

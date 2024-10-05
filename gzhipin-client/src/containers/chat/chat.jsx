@@ -79,13 +79,10 @@ class Chat extends Component {
 
     // 计算当前聊天的chatId
     const meId = user._id
-    console.log('users', users);
-    console.log('user', user);
     if(!users[meId]) { // 如果还没有获取数据, 直接不做任何显示
       return null
     }
-    console.log('users in chat.js', users);
-    console.log('user in chat.js', user);
+
     const targetId = this.props.match.params.userid
     const chatId = [meId, targetId].sort().join('_')
 
@@ -94,7 +91,7 @@ class Chat extends Component {
 
     // 得到目标用户的header图片对象
     const targetHeader = users[targetId].header
-    const targetIcon = targetHeader ? require(`../../assets/images/avatar1.png`) : null
+    const targetIcon = targetHeader ? require(`../../assets/images/${targetHeader}.png`) : null
 
     return (
       <div id='chat-page'>

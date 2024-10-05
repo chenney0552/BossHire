@@ -14,7 +14,7 @@ const initUser = {
 }
 
 const initChat = {
-    users:{}, // all the users in the chat key: userid, value: user
+    users:{}, // all the users in the chat key: userid, value: {username, header}
     chatMsgs: [], // all the chat messages realted with current user
     unReadCount: 0 // total unread message count
 }
