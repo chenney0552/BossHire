@@ -2,7 +2,7 @@
 * contains multiple reducers functions: based on the old state and action, return a new state
 */
 import { combineReducers } from 'redux';
-import { AUTH_SUCCESS, ERROR_MSG, RECEIVE_USER, RESET_USER, RECEIVE_USER_LIST, RECEIVE_MSG_LIST, RECEIVE_MSG } from './action-types';
+import { AUTH_SUCCESS, ERROR_MSG, RECEIVE_USER, RESET_USER, RECEIVE_USER_LIST, RECEIVE_MSG_LIST, RECEIVE_MSG, MSG_READ } from './action-types';
 import {getRedirectTo} from '../utils'
 
 // reducer for user
@@ -34,6 +34,19 @@ function chat(state=initChat, action) {
                 users: state.users,
                 chatMsgs: [...state.chatMsgs, chatMsg],
                 unReadCount: state.unReadCount + (!chatMsg.read && chatMsg.to === userid ? 1 : 0)
+            }
+        case MSG_READ:
+            const {from, to, count} = action.data;
+            return {
+                users: state.users,
+                chatMsgs: state.chatMsgs.map(msg => {
+                    if (msg.from === from && msg.to === to && !msg.read) {
+                        return {...msg, read: true}
+                    } else {
+                        return msg
+                    }
+                }),
+                unReadCount: state.unReadCount - count
             }
         default:
             return state

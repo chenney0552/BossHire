@@ -1,8 +1,8 @@
 /*
 * contains multiple action creators
 */
-import {reqRegister, reqLogin, reqUpdateUser, reqUser, reqUserList, reqChatMsgList} from '../api'
-import { AUTH_SUCCESS, ERROR_MSG, RECEIVE_USER, RESET_USER, RECEIVE_USER_LIST, RECEIVE_MSG_LIST, RECEIVE_MSG } from './action-types';
+import {reqRegister, reqLogin, reqUpdateUser, reqUser, reqUserList, reqChatMsgList, reqReadMsg} from '../api'
+import { AUTH_SUCCESS, ERROR_MSG, RECEIVE_USER, RESET_USER, RECEIVE_USER_LIST, RECEIVE_MSG_LIST, RECEIVE_MSG, MSG_READ } from './action-types';
 import io from 'socket.io-client'
 
 const authSuccess = (user) => ({type: AUTH_SUCCESS, data: user});
@@ -35,6 +35,18 @@ export const sendMsg = ({from, to, content}) => {
     }
 }
 
+// read message action creator
+export const readMsg = (from, to) => {
+    return async dispatch => {
+        const response = await reqReadMsg(from);
+        const result = response.data;
+        if (result.code === 0) {
+            const count = result.data;
+            dispatch(msgRead({count, from, to}))
+        }
+    }
+}
+
 // get msg list tool function
 async function getMsgList(dispatch, userid) {
     initIO(dispatch, userid);
@@ -48,6 +60,7 @@ async function getMsgList(dispatch, userid) {
 
 const receiveMsgList = ({users, chatMsgs, userid}) => ({type: RECEIVE_MSG_LIST, data:{users, chatMsgs, userid}})
 const receiveMsg = (chatMsg, userid) => ({type: RECEIVE_MSG, data: {chatMsg, userid}})
+const msgRead = ({count, from, to}) => ({type: MSG_READ, data: {count, from, to}})
 
 export const register = (user) => {
     const {username, password, password2, type} = user
