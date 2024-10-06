@@ -22,7 +22,7 @@ function initIO(dispatch, userid) {
             console.log('receiveMsg', chatMsg);
             // only when the chatMsg is related with the current user, then dispatch the action
             if (chatMsg && (userid === chatMsg.to || userid === chatMsg.from)) {
-                dispatch(receiveMsg(chatMsg))
+                dispatch(receiveMsg(chatMsg, userid))
             }
         });
     }
@@ -42,12 +42,12 @@ async function getMsgList(dispatch, userid) {
     const result = response.data;
     if (result.code === 0) {
         const {users, chatMsgs} = result.data;
-        dispatch(receiveMsgList({users, chatMsgs}))
+        dispatch(receiveMsgList({users, chatMsgs, userid}))
     }
 }
 
 const receiveMsgList = ({users, chatMsgs, userid}) => ({type: RECEIVE_MSG_LIST, data:{users, chatMsgs, userid}})
-const receiveMsg = (chatMsg) => ({type: RECEIVE_MSG, data: chatMsg})
+const receiveMsg = (chatMsg, userid) => ({type: RECEIVE_MSG, data: {chatMsg, userid}})
 
 export const register = (user) => {
     const {username, password, password2, type} = user

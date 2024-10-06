@@ -26,14 +26,14 @@ function chat(state=initChat, action) {
             const {users, chatMsgs} = action.data;
             return {users,
                 chatMsgs,
-                unReadCount: 0
+                unReadCount: chatMsgs.reduce((preTotal, msg) => preTotal + (!msg.read && msg.to === action.data.userid ? 1 : 0), 0)
             }
         case RECEIVE_MSG:
-            const chatMsg = action.data;
+            const {chatMsg, userid} = action.data;
             return {
                 users: state.users,
                 chatMsgs: [...state.chatMsgs, chatMsg],
-                unReadCount: 0
+                unReadCount: state.unReadCount + (!chatMsg.read && chatMsg.to === userid ? 1 : 0)
             }
         default:
             return state
