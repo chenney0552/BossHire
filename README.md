@@ -64,3 +64,5 @@ second-level router for main:
 
 1. Create Azure virtual machine
 2. Ip is 172.174.233.80
+3. Run the build
+4. Please visit http://172.174.233.80:3000 for demo
