@@ -60,3 +60,7 @@ second-level router for main:
 
 7. chat: /chat/:userid chat.jsx
 
+### Deploy to Azure:
+
+1. Create Azure virtual machine
+2. Ip is 172.174.233.80
